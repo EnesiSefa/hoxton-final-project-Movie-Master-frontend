@@ -12,6 +12,11 @@ export type User = {
 export type Movie = {
   id: number;
   title: string;
+  video: string;
+  description: string;
+  duration: number;
+  year: number;
+  genre: string;
   rating: number;
   favorite?: Favorite;
   favoriteId?: number;

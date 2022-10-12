@@ -1,16 +1,16 @@
-import { port } from "../App";
-import { Navigate,useNavigate } from "react-router-dom";
+import "./SignInPage.css";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 type Props = {
   login: (data: any) => void;
 };
-export default function SignIn({ login }: Props) {
-    let navigate = useNavigate()
+export default function SignInPage({ login }: Props) {
+  let navigate = useNavigate();
   return (
-    <div>
+    <div className="sign-in-page">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          fetch(`http://localhost:${port}/sign-in`, {
+          fetch(`http://localhost:4007/sign-in`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -37,13 +37,28 @@ export default function SignIn({ login }: Props) {
         className="sign-in-form"
       >
         <label htmlFor="">
-          <input type="text" name="email" />
+          <input
+            className="sign-in-input"
+            type="text"
+            name="email"
+            placeholder="   write your email"
+          />
         </label>
-        <label htmlFor="">
-          <input type="text" name="password" />
+        <label htmlFor="password">
+          <input
+            className="sign-in-input"
+            type="text"
+            name="password"
+            placeholder="   password"
+          />
         </label>
-        <button>Sign in</button>
+        <button className="sign-in-button" type="submit">
+          Sign in
+        </button>
       </form>
+      <h3>
+        don't have an account, <Link className="sign-in-link" to={"/SignUp"}>Sign up</Link>
+      </h3>
     </div>
   );
 }

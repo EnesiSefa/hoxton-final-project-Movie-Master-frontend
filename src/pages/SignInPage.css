@@ -1,0 +1,48 @@
+.sign-in-page {
+  width: 100vw;
+  background-color: rgb(1, 146, 103);
+  display: grid;
+  /* background: linear-gradient(rgb(1, 146, 103), #9198e5); */
+
+  place-items: center;
+  align-content: center;
+}
+.sign-in-form {
+  display: grid;
+  grid-gap: 9px;
+  padding: 20px;
+}
+
+.sign-in-button:hover {
+  background-color: rgb(255, 211, 101);
+  transition: 1s;
+  color: black;
+  
+}
+.sign-in-button {
+  background-color: antiquewhite;
+  border: none;
+  border-radius: 50px;
+  height: 30px;
+
+  transition: 0.4s;
+  color: rgb(1, 146, 103);
+}
+
+.sign-in-input {
+  color: green;
+  border-radius: 50px;
+  border: none;
+  height: 30px;
+  width: 200px;
+}
+.sign-in-input:focus{
+   border: none;
+}
+
+.sign-in-link {
+  color: rgb(238, 242, 230);
+  text-decoration: none;
+  font-weight: 400;
+  
+}
