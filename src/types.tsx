@@ -12,6 +12,7 @@ export type User = {
 export type Movie = {
   id: number;
   title: string;
+  thumbnail: string;
   video: string;
   description: string;
   duration: number;

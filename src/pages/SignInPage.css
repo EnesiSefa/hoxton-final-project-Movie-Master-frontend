@@ -1,9 +1,10 @@
 .sign-in-page {
   width: 100vw;
-  background-color: rgb(1, 146, 103);
+  /* background-color: rgb(1, 146, 103); */
+  background-color: black;
   display: grid;
-  /* background: linear-gradient(rgb(1, 146, 103), #9198e5); */
-
+  background-image: url("https://w0.peakpx.com/wallpaper/715/270/HD-wallpaper-deadpool-black-red.jpg");  background-repeat: no-repeat;
+  background-position: right;
   place-items: center;
   align-content: center;
 }
@@ -14,19 +15,21 @@
 }
 
 .sign-in-button:hover {
-  background-color: rgb(255, 211, 101);
-  transition: 1s;
-  color: black;
-  
+  background-color: rgb(231, 0, 0);
+  transition: 0.5s;
+  color: white;
 }
+
+
 .sign-in-button {
   background-color: antiquewhite;
   border: none;
   border-radius: 50px;
   height: 30px;
+  font-weight: 700;
 
   transition: 0.4s;
-  color: rgb(1, 146, 103);
+  color: rgb(146, 1, 1);
 }
 
 .sign-in-input {
@@ -36,13 +39,17 @@
   height: 30px;
   width: 200px;
 }
-.sign-in-input:focus{
-   border: none;
+
+.sign-in-input:focus {
+  border: none;
 }
 
 .sign-in-link {
   color: rgb(238, 242, 230);
   text-decoration: none;
   font-weight: 400;
-  
+}
+
+.sign-in-h3 {
+  color: red;
 }

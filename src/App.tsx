@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
-import MoviePage from "./pages/MoviePage";
+import MovieDetails from "./pages/MovieDetails";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
-
 
 import { User } from "./types";
 
@@ -43,14 +42,13 @@ function App() {
 
   return (
     <div className="App">
-      
       <Routes>
         <Route index element={<Navigate replace to="/MovieMasterHome" />} />
         <Route
           path="/MovieMasterHome"
-          element={<HomePage currentUser={currentUser} logout={logout} />}
+          element={<HomePage currentUser={currentUser} logout={logout} login={login}/>}
         />
-        <Route path="/WatchMovie" element={<MoviePage />} />
+        <Route path="/WatchMovie" element={<MovieDetails />} />
         <Route path="/SignIn" element={<SignInPage login={login} />} />
         <Route path="/SignUp" element={<SignUpPage login={login} />} />
       </Routes>

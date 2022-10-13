@@ -7,6 +7,7 @@ export default function SignInPage({ login }: Props) {
   let navigate = useNavigate();
   return (
     <div className="sign-in-page">
+      
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -56,7 +57,7 @@ export default function SignInPage({ login }: Props) {
           Sign in
         </button>
       </form>
-      <h3>
+      <h3 className="sign-in-h3">
         don't have an account, <Link className="sign-in-link" to={"/SignUp"}>Sign up</Link>
       </h3>
     </div>

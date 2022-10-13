@@ -1,10 +1,12 @@
 import { Movie, User } from "../types";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import "./HomePage.css";
 
 type Props = {
   currentUser: User | null;
   logout: () => void;
+  login: (data: any) => void;
 };
 
 export default function HomePage({ currentUser, logout }: Props) {
@@ -24,30 +26,42 @@ export default function HomePage({ currentUser, logout }: Props) {
             <input type="text" placeholder="search..." name="search" />
           </label>
         </form>
-        <form
-          onSubmit={() => {
-            logout();
-            navigate("/SignIn");
-          }}
-        >
-          <button type="submit">Sign out </button>
-        </form>
+        {currentUser ? (
+          <form
+            onSubmit={() => {
+              logout();
+              
+            }}
+          >
+            <button type="submit">Sign out </button>
+          </form>
+        ) : (
+          <form
+            onSubmit={() => {
+              navigate("/SignIn");
+            }}
+          >
+            <button type="submit">Sign in</button>
+          </form>
+        )}
       </header>
       <main className="main">
         <div className="video-section">
           <ul className="movie-list">
-            <li>{currentUser?.username}</li>
             {movies.map((movie) => (
               <li className="movie-item">
-                <h3 className="movie-title">{movie.title}</h3>
-                <video
-                  className="movie-video"
-                  width="320"
-                  height="340"
-                  controls
-                  src={movie.video}
-                ></video>
-                <p className="movie-year">{movie.year}</p>
+                <h4 className="movie-title">
+                  {movie.title}
+                  <p>({movie.year})</p>
+                </h4>
+                <Link to={"/WatchMovie"}>
+                  <img
+                    className="movie-thumbnail"
+                    height={400}
+                    src={movie.thumbnail}
+                    alt="poster"
+                  />
+                </Link>
               </li>
             ))}
           </ul>

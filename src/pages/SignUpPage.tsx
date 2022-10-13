@@ -1,8 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import useSound from "use-sound"
 import "./SignUpPage.css";
-import boopSfx from '../../sounds/audio.mp3';
-
 type Props = {
   login: (data: any) => void;
 };
@@ -60,7 +57,7 @@ export default function SignUpPage({ login }: Props) {
         </label>
         <button className="sign-up-button" type="submit">Sign Up</button>
       </form>
-      <h3>Already have an account <Link className="sign-up-link" to={"/SignIn"}>Sign in</Link></h3>
+      <h3 className="sign-up-h3">Already have an account <Link className="sign-up-link" to={"/SignIn"}>Sign in</Link></h3>
       
     </div>
   );

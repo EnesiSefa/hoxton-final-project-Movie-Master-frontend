@@ -1,11 +1,8 @@
 .sign-up-page {
   width: 100vw;
-  background-color: rgb(28, 103, 88);
+  /* background-color: rgb(28, 103, 88); */
   display: grid;
-  background-image: linear-gradient(
-      rgba(0, 0, 255, 0.5),
-      rgba(251, 255, 0, 0.5)
-    ),
+  background-image:
     url("https://wallpapersmug.com/download/320x480/704f9f/deadpool-2-movie-cinema.jpg");
   place-items: center;
   align-content: center;
@@ -19,7 +16,7 @@
 .sign-up-button:hover {
   background-color: rgb(81, 165, 42);
   transition: 0.4s;
-  color: rgb(207, 255, 141);
+  color: rgb(255, 255, 255);
 }
 
 .sign-up-button {
@@ -52,4 +49,8 @@ input::placeholder {
 }
 .sign-up-link:hover{
     color: black;
+}
+
+.sign-up-h3{
+  color: rgb(69, 236, 27);
 }
