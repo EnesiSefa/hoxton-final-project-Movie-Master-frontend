@@ -6,11 +6,13 @@ import MovieDetails from "./pages/MovieDetails";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 
-import { User } from "./types";
+import { Movie, User } from "./types";
 
 export const port = 4007;
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [movies, setMovies] = useState<Movie[]>([]);
+ 
   function login(data: any) {
     console.log(2);
     setCurrentUser(data.user);
@@ -40,15 +42,32 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    fetch(`http://localhost:4007/movies`)
+      .then((resp) => resp.json())
+      .then((movies) => setMovies(movies));
+  }, []);
+  
+    
+  
+
   return (
     <div className="App">
       <Routes>
         <Route index element={<Navigate replace to="/MovieMasterHome" />} />
         <Route
           path="/MovieMasterHome"
-          element={<HomePage currentUser={currentUser} logout={logout} login={login}/>}
+          element={
+            <HomePage
+              currentUser={currentUser}
+              logout={logout}
+              login={login}
+              movies={movies}
+              
+            />
+          }
         />
-        <Route path="/WatchMovie" element={<MovieDetails />} />
+        <Route path="/movie/:id" element={<MovieDetails />} />
         <Route path="/SignIn" element={<SignInPage login={login} />} />
         <Route path="/SignUp" element={<SignUpPage login={login} />} />
       </Routes>

@@ -1,3 +1,8 @@
-.movie-page{
-    background-color: blueviolet;
+.movie-details {
+  background-color: blueviolet;
+  display: grid;
+}
+
+.single-review {
+  list-style: none;
 }
