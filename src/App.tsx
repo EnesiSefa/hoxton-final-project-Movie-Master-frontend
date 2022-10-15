@@ -67,7 +67,7 @@ function App() {
             />
           }
         />
-        <Route path="/movie/:id" element={<MovieDetails currentUser={currentUser}/>} />
+        <Route path="/movie/:id" element={<MovieDetails currentUser={currentUser} logout={logout}/>} />
         <Route path="/SignIn" element={<SignInPage login={login} />} />
         <Route path="/SignUp" element={<SignUpPage login={login} />} />
       </Routes>

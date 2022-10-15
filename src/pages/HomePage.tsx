@@ -8,15 +8,9 @@ type Props = {
   logout: () => void;
   login: (data: any) => void;
   movies: Movie[];
-  
 };
 
-export default function HomePage({
-  currentUser,
-  logout,
-  movies,
-
-}: Props) {
+export default function HomePage({ currentUser, logout, movies }: Props) {
   let navigate = useNavigate();
   return (
     <div className="home-page">
@@ -28,13 +22,19 @@ export default function HomePage({
           </label>
         </form>
         {currentUser ? (
-          <form
-            onSubmit={() => {
-              logout();
-            }}
-          >
-            <button type="submit">Sign out </button>
-          </form>
+          <>
+            <form
+              onSubmit={() => {
+                logout();
+              }}
+            >
+              <button type="submit">Sign out </button>
+            </form>
+            <div className="home-page-current-user">
+              <img src={currentUser.profilePic} alt="" height={50} />
+              <span className="home-page-current-user-span">{currentUser.username}</span>
+            </div>
+          </>
         ) : (
           <form
             onSubmit={() => {
@@ -67,7 +67,7 @@ export default function HomePage({
           </ul>
         </div>
       </main>
-      <footer className="footer"></footer>
+      <footer className="footer">footer</footer>
     </div>
   );
 }

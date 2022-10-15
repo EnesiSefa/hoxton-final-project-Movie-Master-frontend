@@ -3,9 +3,9 @@
   margin: 0;
   padding: 0;
 }
-.App{
+.App {
   height: 100vh;
   /* background-color: aqua; */
   display: grid;
-justify-content: center;
+  /* justify-content: center; */
 }

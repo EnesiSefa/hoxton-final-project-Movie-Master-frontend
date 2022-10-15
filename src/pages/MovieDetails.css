@@ -1,8 +1,38 @@
 .movie-details {
-  background-color: blueviolet;
+  background-color: #7395ae;
   display: grid;
+  justify-content: center;
+}
+.movie-details-header{
+  display: grid;
+  grid-auto-flow: column;
+}
+.movie-details-main{
+  display: grid;
+  /* grid-auto-flow: column; */
+  grid-template-columns: 0.5fr 0.5fr;
+  padding: 20px;
+  grid-gap: 20px;
+  align-content: center;
 }
 
+.movie-section{
+  justify-items: center;
+}
+.description{
+  border: 5px solid gray;
+}
+.reviews{
+  /* background-color: #b0a295; */
+  backdrop-filter: invert(80%);
+  margin-top: 43px;
+}
 .single-review {
   list-style: none;
+  /* outlinet: 1px black solid; */
+  border-bottom: 1px black solid;
 }
+.delete-button{
+  background-color: tomato;
+}
+

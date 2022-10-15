@@ -2,19 +2,27 @@
   /* width: 100vw; */
   display: grid;
   grid-template:
-    "header" 40px
+    "header" 100px
     "main" 1fr
     "footer" 40px / 1fr;
   background-color: rgba(137, 43, 226, 0.479);
   /* place-items: center; */
   padding: 20px;
-  grid-gap: 20px;
+  /* grid-gap: 20px; */
 }
 
 .header {
   grid-area: header;
   display: grid;
   grid-auto-flow: column;
+}
+.home-page-current-user{
+  display: grid;
+  grid-auto-flow: column;
+  place-content: start;
+}
+.home-page-current-user-span{
+ font-weight: 500;
 }
 .main {
   grid-area: main;
