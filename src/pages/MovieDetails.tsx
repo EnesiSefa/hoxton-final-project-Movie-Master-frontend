@@ -4,11 +4,14 @@ import { BsPlay } from "react-icons/bs";
 import ReactPlayer from "react-player";
 
 import "./MovieDetails.css";
-import { Movie } from "../types";
+import { Movie, User } from "../types";
 import { useParams } from "react-router-dom";
-
-export default function MoviePage() {
+type Props = {
+  currentUser: User | null;
+};
+export default function MoviePage({ currentUser }: Props) {
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [comment, setComment] = useState("");
   const params = useParams();
   useEffect(() => {
     fetch(`http://localhost:4007/movie/${params.id}`)
@@ -45,11 +48,50 @@ export default function MoviePage() {
             ))}
           </ul>
         </div>
-        <form action="" className="add-comment-form">
-          <label htmlFor="">
-            <input type="text" name="comment" />
-          </label>
-          <button type="submit">comment</button>
+        <form
+          className="add-comment-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = {
+              userId: currentUser?.id,
+              movieId: movie?.id,
+              comment,
+            };
+            fetch(`http://localhost:4007/addReviewToMovie`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((resp) => resp.json())
+              .then((data) => {
+                // data = {user,token}
+                if (data.error) {
+                  alert(data.error);
+                  console.log(data.error);
+                } else {
+                  fetch(`http://localhost:4007/movie/${params.id}`)
+                    .then((resp) => resp.json())
+                    .then((singleMovie) => setMovie(singleMovie));
+                }
+              });
+          }}
+        >
+          {currentUser && (
+            <>
+              <label htmlFor="">
+                <input
+                  type="text"
+                  name="comment"
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                />
+              </label>
+              <button type="submit">comment</button>
+            </>
+          )}
         </form>
       </main>
       <footer></footer>

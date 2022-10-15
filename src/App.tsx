@@ -43,7 +43,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:4007/movies`)
+    fetch(`http://localhost:4007/movies/1`)
       .then((resp) => resp.json())
       .then((movies) => setMovies(movies));
   }, []);
@@ -67,7 +67,7 @@ function App() {
             />
           }
         />
-        <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/movie/:id" element={<MovieDetails currentUser={currentUser}/>} />
         <Route path="/SignIn" element={<SignInPage login={login} />} />
         <Route path="/SignUp" element={<SignUpPage login={login} />} />
       </Routes>
