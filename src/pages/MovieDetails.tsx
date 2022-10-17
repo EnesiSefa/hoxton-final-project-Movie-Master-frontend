@@ -28,6 +28,16 @@ export default function MovieDetails({
   let navigate = useNavigate();
   const [movie, setMovie] = useState<Movie | null>(null);
   const [comment, setComment] = useState("");
+  const [userReview, setUserReview] = useState([]);
+  const locatingId = (id: number) => {
+    useEffect(() => {
+      fetch(`http://localhost:${port}/findUserFromReview/${id}`)
+        .then((resp) => resp.json())
+        .then((user) => setUserReview(user));
+    }, []);
+  };
+  const usersFound = movie?.reviews?.map((review) => locatingId(review.userId));
+  
 
   const params = useParams();
   useEffect(() => {
@@ -106,7 +116,7 @@ export default function MovieDetails({
               {movie?.reviews?.map((review) => (
                 <li className="single-review">
                   <div>
-                    <img src={review.user?.profilePic} alt="" />
+                    <img src={review.user?.profilePic} height={100} alt="" />
                     <span>{review.user?.username}</span>
                   </div>
                   <div className="review-comment">
@@ -143,14 +153,13 @@ export default function MovieDetails({
               })
                 .then((resp) => resp.json())
                 .then((data) => {
-                
                   if (data.error) {
                     alert(data.error);
                     console.log(data.error);
                   } else {
                     fetch(`http://localhost:${port}/movie/${params.id}`)
                       .then((resp) => resp.json())
-                      .then((singleMovie) => setMovie(singleMovie) );
+                      .then((singleMovie) => setMovie(singleMovie));
                   }
                 });
             }}

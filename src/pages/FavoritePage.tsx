@@ -18,7 +18,12 @@ export default function FavoritePage({ currentUser, favorites }: Props) {
         <h2>{currentUser?.username}'s favorite movies:</h2>
         <ul>
           {favorites.map((favorite) =>
-            favorite.movies.map((movie) => <li>{movie.title}</li>)
+            favorite.movies?.map((movie) => (
+              <li>
+                <img src={movie.thumbnail} alt="" height={200} />
+                <h3>{movie.title}</h3>
+              </li>
+            ))
           )}
         </ul>
       </div>
