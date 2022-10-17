@@ -3,11 +3,11 @@
   display: grid;
   justify-content: center;
 }
-.movie-details-header{
+.movie-details-header {
   display: grid;
   grid-auto-flow: column;
 }
-.movie-details-main{
+.movie-details-main {
   display: grid;
   /* grid-auto-flow: column; */
   grid-template-columns: 0.5fr 0.5fr;
@@ -16,13 +16,13 @@
   align-content: center;
 }
 
-.movie-section{
+.movie-section {
   justify-items: center;
 }
-.description{
+.description {
   border: 5px solid gray;
 }
-.reviews{
+.reviews {
   /* background-color: #b0a295; */
   backdrop-filter: invert(80%);
   margin-top: 43px;
@@ -32,7 +32,7 @@
   /* outlinet: 1px black solid; */
   border-bottom: 1px black solid;
 }
-.delete-button{
+.delete-button {
   background-color: tomato;
 }
 

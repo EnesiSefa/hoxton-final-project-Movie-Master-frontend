@@ -13,7 +13,7 @@ export default function SignUpPage({ login }: Props) {
       <form className="sign-up-form"
         onSubmit={(e) => {
           e.preventDefault();
-          fetch(`http://localhost:4007/sign-up`, {
+          fetch(`http://localhost:4008/sign-up`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

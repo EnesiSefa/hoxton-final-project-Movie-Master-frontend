@@ -23,6 +23,8 @@ export type Movie = {
   favoriteId?: number;
   reviews?: Review[];
 };
+
+
 export type Favorite = {
   id: number;
   movies?: Movie[];

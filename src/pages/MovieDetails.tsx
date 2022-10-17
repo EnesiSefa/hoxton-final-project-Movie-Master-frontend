@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaBeer } from "react-icons/fa";
 import { BsPlay } from "react-icons/bs";
+import { GrFavorite } from "react-icons/gr";
 import {
   AiOutlineDislike,
   AiOutlineHeart,
@@ -11,27 +12,36 @@ import { IoIosRemoveCircleOutline } from "react-icons/io";
 import ReactPlayer from "react-player";
 
 import "./MovieDetails.css";
-import { Movie, User } from "../types";
-import { useNavigate, useParams } from "react-router-dom";
+import { Favorite, Movie, User } from "../types";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { port } from "../port";
 type Props = {
   currentUser: User | null;
   logout: () => void;
+  setFavorites: (value: Favorite[]) => void;
 };
-export default function MoviePage({ currentUser, logout }: Props) {
+export default function MoviePage({
+  currentUser,
+  logout,
+  setFavorites,
+}: Props) {
   let navigate = useNavigate();
   const [movie, setMovie] = useState<Movie | null>(null);
   const [comment, setComment] = useState("");
-  const [] = useState(false);
+
   const params = useParams();
   useEffect(() => {
-    fetch(`http://localhost:4007/movie/${params.id}`)
+    fetch(`http://localhost:${port}/movie/${params.id}`)
       .then((resp) => resp.json())
       .then((singleMovie) => setMovie(singleMovie));
   }, []);
+
   return (
     <div className="movie-details">
       <header className="movie-details-header">
-        <div>categories</div>
+        <div>
+          <Link to={"/MovieMasterHome"}>Movie Master</Link>
+        </div>
         <form>
           <label htmlFor="search">
             <input type="text" placeholder="search..." name="search" />
@@ -50,6 +60,11 @@ export default function MoviePage({ currentUser, logout }: Props) {
               <img src={currentUser.profilePic} alt="" height={50} />
               <span className="movie-details-current-user-span">
                 {currentUser.username}
+              </span>
+            </div>
+            <div>
+              <span>
+                <Link to={"/Favorites"}>Favorites</Link>
               </span>
             </div>
           </>
@@ -119,7 +134,7 @@ export default function MoviePage({ currentUser, logout }: Props) {
                 movieId: movie?.id,
                 comment,
               };
-              fetch(`http://localhost:4007/addReviewToMovie`, {
+              fetch(`http://localhost:${port}/addReviewToMovie`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -133,7 +148,7 @@ export default function MoviePage({ currentUser, logout }: Props) {
                     alert(data.error);
                     console.log(data.error);
                   } else {
-                    fetch(`http://localhost:4007/movie/${params.id}`)
+                    fetch(`http://localhost:${port}/movie/${params.id}`)
                       .then((resp) => resp.json())
                       .then((singleMovie) => setMovie(singleMovie));
                   }
@@ -157,7 +172,39 @@ export default function MoviePage({ currentUser, logout }: Props) {
           </form>
         </div>
       </main>
-      <footer></footer>
+      <footer>
+        Add to Favorites
+        <button
+          className="favorite-button"
+          onClick={(e) => {
+            e.preventDefault();
+            const data = {
+              userId: currentUser?.id,
+              movieId: movie?.id,
+            };
+            fetch(`http://localhost:${port}/addMovieToFavorite`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((resp) => resp.json())
+              .then((data) => {
+                if (data.error) {
+                  alert(data.error);
+                  console.log(data.error);
+                } else {
+                  fetch(`http://localhost:${port}/favorites`)
+                    .then((resp) => resp.json())
+                    .then((favorites) => setFavorites(favorites));
+                }
+              });
+          }}
+        >
+          ❤️
+        </button>
+      </footer>
     </div>
   );
 }
