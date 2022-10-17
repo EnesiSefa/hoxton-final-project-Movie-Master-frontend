@@ -18,9 +18,9 @@ import { port } from "../port";
 type Props = {
   currentUser: User | null;
   logout: () => void;
-  setFavorites: (value: Favorite[]) => void;
+  setFavorites: (val: Favorite[]) => void;
 };
-export default function MoviePage({
+export default function MovieDetails({
   currentUser,
   logout,
   setFavorites,
@@ -143,14 +143,14 @@ export default function MoviePage({
               })
                 .then((resp) => resp.json())
                 .then((data) => {
-                  // data = {user,token}
+                
                   if (data.error) {
                     alert(data.error);
                     console.log(data.error);
                   } else {
                     fetch(`http://localhost:${port}/movie/${params.id}`)
                       .then((resp) => resp.json())
-                      .then((singleMovie) => setMovie(singleMovie));
+                      .then((singleMovie) => setMovie(singleMovie) );
                   }
                 });
             }}

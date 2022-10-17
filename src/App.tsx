@@ -52,6 +52,11 @@ function App() {
       .then((resp) => resp.json())
       .then((movies) => setMovies(movies));
   }, []);
+  useEffect(() => {
+    fetch(`http://localhost:${port}/favorites`)
+      .then((resp) => resp.json())
+      .then((favs) => setFavorites(favs));
+  }, []);
 
   return (
     <div className="App">
@@ -75,7 +80,6 @@ function App() {
               currentUser={currentUser}
               logout={logout}
               setFavorites={setFavorites}
-            
             />
           }
         />
