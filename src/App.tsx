@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
+import ChatPage from "./pages/ChatPage/ChatPage";
 import FavoritePage from "./pages/FavoritePage";
 import HomePage from "./pages/HomePage";
 import MovieDetails from "./pages/MovieDetails";
@@ -10,19 +11,17 @@ import { port } from "./port";
 
 import { Favorite, Movie, User } from "./types";
 
-
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [favorites, setFavorites] = useState<Favorite[]>([]);
-  
 
   function login(data: any) {
     console.log(2);
     setCurrentUser(data.user);
     localStorage.token = data.token;
   }
-  
+
   function logout() {
     setCurrentUser(null);
     localStorage.clear();
@@ -88,8 +87,12 @@ function App() {
         <Route
           path="/Favorites"
           element={
-            <FavoritePage currentUser={currentUser} favorites={favorites}/>
+            <FavoritePage currentUser={currentUser} favorites={favorites} />
           }
+        />
+        <Route
+          path="/Chat"
+          element={<ChatPage currentUser={currentUser} logout={logout} />}
         />
       </Routes>
     </div>

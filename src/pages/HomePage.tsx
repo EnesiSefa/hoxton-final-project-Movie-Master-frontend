@@ -62,8 +62,8 @@ export default function HomePage({ currentUser, logout, movies }: Props) {
               <p>Dark mode</p>
             )}
             <input
+              name="checkbox"
               type="checkbox"
-              checked={false}
               onChange={() => {
                 if (theme) {
                   setTheme(false);

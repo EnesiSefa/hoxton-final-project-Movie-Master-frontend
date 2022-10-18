@@ -1,0 +1,15 @@
+.chat-page {
+  display: grid;
+  height: 100vh;
+  background-color: #7395ae;
+}
+
+.chat-page-header {
+  display: grid;
+  grid-auto-flow: column;
+}
+
+.chat-page-main {
+  display: grid;
+  
+}
