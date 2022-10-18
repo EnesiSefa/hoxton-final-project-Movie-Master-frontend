@@ -12,10 +12,10 @@ type Props = {
 
 export default function HomePage({ currentUser, logout, movies }: Props) {
   let navigate = useNavigate();
+  const [theme, setTheme] = useState(false);
   return (
-    <div className="home-page">
+    <div className={theme ? "home-page-dark" : "home-page"}>
       <header className="header">
-        <div>categories</div>
         <form>
           <label htmlFor="search">
             <input type="text" placeholder="search..." name="search" />
@@ -31,8 +31,18 @@ export default function HomePage({ currentUser, logout, movies }: Props) {
               <button type="submit">Sign out </button>
             </form>
             <div className="home-page-current-user">
-              <img src={currentUser.profilePic} alt="" height={50} />
-              <span className="home-page-current-user-span">{currentUser.username}</span>
+              <Link to={"/Favorites"}>
+                <img src={currentUser.profilePic} alt="" height={50} />
+              </Link>
+              <span
+                className={
+                  theme
+                    ? "home-page-current-user-span-dark"
+                    : "home-page-current-user-span"
+                }
+              >
+                {currentUser.username}
+              </span>
             </div>
           </>
         ) : (
@@ -44,20 +54,42 @@ export default function HomePage({ currentUser, logout, movies }: Props) {
             <button type="submit">Sign in</button>
           </form>
         )}
+        <div>
+          <label htmlFor="checkbox">
+            {theme ? (
+              <p style={{ color: "white" }}>Light mode</p>
+            ) : (
+              <p>Dark mode</p>
+            )}
+            <input
+              type="checkbox"
+              checked={false}
+              onChange={() => {
+                if (theme) {
+                  setTheme(false);
+                } else {
+                  setTheme(true);
+                }
+              }}
+            />
+          </label>
+        </div>
       </header>
       <main className="main">
         <div className="video-section">
           <ul className="movie-list">
             {movies.map((movie) => (
               <li key={movie.id} className="movie-item">
-                <h4 className="movie-title">
+                <h4 className={theme ? "movie-title-dark" : "movie-title"}>
                   {movie.title}
-                  <p>({movie.year})</p>
                 </h4>
+                <p style={{ color: "red" }}>({movie.year})</p>
                 <Link to={`/movie/${movie.id}`}>
                   <img
-                    className="movie-thumbnail"
-                    height={400}
+                    className={
+                      theme ? "movie-thumbnail-dark" : "movie-thumbnail"
+                    }
+                    height={300}
                     src={movie.thumbnail}
                     alt="poster"
                   />

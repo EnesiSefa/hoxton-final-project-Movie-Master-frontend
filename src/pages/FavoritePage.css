@@ -1,16 +1,32 @@
 .favorite-page {
   display: grid;
-  grid-template:
-    "user-information" 1fr
-    "user-favorite-movies" 1fr/
-    1fr 1fr;
-  /* grid-template-columns: 0.6fr 0.4fr; */
+ 
   height: 100vh;
+  background-color: #7395ae;
+}
+.favorite-page-header {
+  display: grid;
+}
+.favorite-page-main {
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
 }
 .user-information {
   display: grid;
   place-content: center;
+  background-color: rgba(127, 255, 212, 0.137);
 }
 .user-favorite-movies {
   display: grid;
+  grid-template-columns: auto auto ;
+  /* place-content: center; */
+  /* background-color: aquamarine; */
+
+  
+}
+
+.user-favorite-movie-list{
+  display: grid;
+  grid-template-columns: auto auto;
+  list-style: none;
 }

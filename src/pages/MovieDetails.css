@@ -3,10 +3,17 @@
   display: grid;
   justify-content: center;
 }
+.movie-details-dark {
+  background-color: #294152;
+  display: grid;
+  justify-content: center;
+}
+
 .movie-details-header {
   display: grid;
   grid-auto-flow: column;
 }
+
 .movie-details-main {
   display: grid;
   /* grid-auto-flow: column; */
@@ -19,20 +26,41 @@
 .movie-section {
   justify-items: center;
 }
+
 .description {
   border: 5px solid gray;
 }
+
 .reviews {
   /* background-color: #b0a295; */
   backdrop-filter: invert(80%);
   margin-top: 43px;
 }
+
 .single-review {
   list-style: none;
   /* outlinet: 1px black solid; */
   border-bottom: 1px black solid;
 }
+.single-review-user{
+  display: grid;
+  grid-auto-flow: column;
+  place-content: start;
+  align-items: center;
+  grid-gap: 3px;
+  
+}
+
 .delete-button {
   background-color: tomato;
+}
+
+.delete-button:hover{
+  cursor: pointer;
+}
+footer{
+  display: grid;
+  grid-auto-flow: column;
+  place-content: start;
 }
 

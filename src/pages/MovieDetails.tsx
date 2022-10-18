@@ -29,15 +29,7 @@ export default function MovieDetails({
   const [movie, setMovie] = useState<Movie | null>(null);
   const [comment, setComment] = useState("");
   const [userReview, setUserReview] = useState([]);
-  const locatingId = (id: number) => {
-    useEffect(() => {
-      fetch(`http://localhost:${port}/findUserFromReview/${id}`)
-        .then((resp) => resp.json())
-        .then((user) => setUserReview(user));
-    }, []);
-  };
-  const usersFound = movie?.reviews?.map((review) => locatingId(review.userId));
-  
+  const [theme, setTheme] = useState(false);
 
   const params = useParams();
   useEffect(() => {
@@ -47,7 +39,7 @@ export default function MovieDetails({
   }, []);
 
   return (
-    <div className="movie-details">
+    <div className={theme ? "movie-details-dark" : "movie-details"}>
       <header className="movie-details-header">
         <div>
           <Link to={"/MovieMasterHome"}>Movie Master</Link>
@@ -87,6 +79,26 @@ export default function MovieDetails({
             <button type="submit">Sign in</button>
           </form>
         )}
+        <div>
+          <label htmlFor="checkbox">
+            {theme ? (
+              <p style={{ color: "white" }}>Light mode</p>
+            ) : (
+              <p>Dark mode</p>
+            )}
+            <input
+              type="checkbox"
+              checked={false}
+              onChange={() => {
+                if (theme) {
+                  setTheme(false);
+                } else {
+                  setTheme(true);
+                }
+              }}
+            />
+          </label>
+        </div>
       </header>
 
       <main className="movie-details-main">
@@ -96,6 +108,7 @@ export default function MovieDetails({
             <iframe
               id="videoPlayer"
               width="100%"
+              allowFullScreen={true}
               height="360"
               src={movie?.video}
               frameBorder="0"
@@ -115,8 +128,8 @@ export default function MovieDetails({
             <ul>
               {movie?.reviews?.map((review) => (
                 <li className="single-review">
-                  <div>
-                    <img src={review.user?.profilePic} height={100} alt="" />
+                  <div className="single-review-user">
+                    <img src={review.user?.profilePic} height={40} alt="" />
                     <span>{review.user?.username}</span>
                   </div>
                   <div className="review-comment">
@@ -182,37 +195,39 @@ export default function MovieDetails({
         </div>
       </main>
       <footer>
-        Add to Favorites
-        <button
-          className="favorite-button"
-          onClick={(e) => {
-            e.preventDefault();
-            const data = {
-              userId: currentUser?.id,
-              movieId: movie?.id,
-            };
-            fetch(`http://localhost:${port}/addMovieToFavorite`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            })
-              .then((resp) => resp.json())
-              .then((data) => {
-                if (data.error) {
-                  alert(data.error);
-                  console.log(data.error);
-                } else {
-                  fetch(`http://localhost:${port}/favorites`)
-                    .then((resp) => resp.json())
-                    .then((favorites) => setFavorites(favorites));
-                }
-              });
-          }}
-        >
-          ❤️
-        </button>
+        {currentUser && (
+          <><p>Add to favorites</p>
+          <button
+            className="favorite-button"
+            onClick={(e) => {
+              e.preventDefault();
+              const data = {
+                userId: currentUser?.id,
+                movieId: movie?.id,
+              };
+              fetch(`http://localhost:${port}/addMovieToFavorite`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((resp) => resp.json())
+                .then((data) => {
+                  if (data.error) {
+                    alert(data.error);
+                    console.log(data.error);
+                  } else {
+                    fetch(`http://localhost:${port}/favorites`)
+                      .then((resp) => resp.json())
+                      .then((favorites) => setFavorites(favorites));
+                  }
+                });
+            }}
+          >
+            ❤️
+          </button></>
+        )}
       </footer>
     </div>
   );

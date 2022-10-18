@@ -4,8 +4,8 @@ export type User = {
   username: string;
   email: string;
   password: string;
-  reviews?: Review[];
-  favorites?: Favorite[];
+  reviews: Review[];
+  favorites: Favorite[];
   likeDislike?: LikeDislike;
 };
 
@@ -21,13 +21,13 @@ export type Movie = {
   rating: number;
   favorite?: Favorite;
   favoriteId?: number;
-  reviews?: Review[];
+  reviews: Review[];
 };
 
 
 export type Favorite = {
   id: number;
-  movies?: Movie[];
+  movies: Movie[];
   User?: User;
   userId?: number;
 };
@@ -39,7 +39,7 @@ export type Review = {
   userId?: number;
   Movie?: Movie;
   movieId?: number;
-  likeDislike?: LikeDislike[];
+  likeDislike: LikeDislike[];
 };
 
 export type LikeDislike = {
