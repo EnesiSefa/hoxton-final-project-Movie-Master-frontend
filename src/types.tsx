@@ -6,7 +6,22 @@ export type User = {
   password: string;
   reviews: Review[];
   favorites: Favorite[];
+  friendships: Friendship[]
+  messages: Message[]
   likeDislike?: LikeDislike;
+};
+export type Friendship = {
+  id: number;
+  friend: User;
+  friendId: number;
+};
+
+export type Message = {
+  id: number;
+  content: string;
+  user: User;
+  userId: number;
+  
 };
 
 export type Movie = {

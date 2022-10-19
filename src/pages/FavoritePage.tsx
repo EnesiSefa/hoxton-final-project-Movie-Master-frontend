@@ -35,7 +35,7 @@ export default function FavoritePage({ currentUser, favorites }: Props) {
           </ul>
         </div>
       </main>
-      <footer>footer</footer>
+      <footer>Copyright@ 2022 MovieMaster All rights reserved</footer>
     </div>
   );
 }

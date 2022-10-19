@@ -2,27 +2,39 @@
   /* width: 100vw; */
   display: grid;
   grid-template:
+    "movie-master" 40px
     "header" 100px
     "main" 1fr
     "footer" 40px / 1fr;
   background-color: #7395ae;
   /* place-items: center; */
-  padding: 20px;
-  /* grid-gap: 20px; */
+  padding-left: 20px;
+  grid-gap: 40px;
 }
+
 .home-page-dark {
   /* width: 100vw; */
   display: grid;
   grid-template:
+    "movie-master" 40px
     "header" 100px
     "main" 1fr
     "footer" 40px / 1fr;
   background-color: #253038;
   /* place-items: center; */
-  padding: 20px;
-  /* grid-gap: 20px; */
+  padding-left: 20px;
+  grid-gap: 40px;
 }
-
+.movie-master{
+  
+  text-align: center;
+  
+  
+}
+.movie-master-dark{
+  color: #0095ff;
+  text-align: center;
+}
 .header {
   grid-area: header;
   display: grid;
@@ -77,4 +89,5 @@
 
 .footer {
   grid-area: footer;
+  place-content: center;
 }

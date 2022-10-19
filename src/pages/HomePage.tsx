@@ -15,6 +15,7 @@ export default function HomePage({ currentUser, logout, movies }: Props) {
   const [theme, setTheme] = useState(false);
   return (
     <div className={theme ? "home-page-dark" : "home-page"}>
+      <h1 className={theme? "movie-master-dark":"movie-master"}>Movie Master</h1>
       <header className="header">
         <form>
           <label htmlFor="search">
@@ -99,7 +100,7 @@ export default function HomePage({ currentUser, logout, movies }: Props) {
           </ul>
         </div>
       </main>
-      <footer className="footer">footer</footer>
+      <footer className="footer">Copyright@ 2022 MovieMaster All rights reserved</footer>
     </div>
   );
 }

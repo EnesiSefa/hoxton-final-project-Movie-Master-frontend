@@ -28,7 +28,6 @@ export default function MovieDetails({
   let navigate = useNavigate();
   const [movie, setMovie] = useState<Movie | null>(null);
   const [comment, setComment] = useState("");
-  const [userReview, setUserReview] = useState([]);
   const [theme, setTheme] = useState(false);
 
   const params = useParams();
@@ -125,7 +124,7 @@ export default function MovieDetails({
         </div>
         <div className="review-section">
           <div className="reviews">
-            <ul>
+            <ul className="review-list">
               {movie?.reviews?.map((review) => (
                 <li className="single-review">
                   <div className="single-review-user">
@@ -228,6 +227,7 @@ export default function MovieDetails({
             ❤️
           </button></>
         )}
+        
       </footer>
     </div>
   );

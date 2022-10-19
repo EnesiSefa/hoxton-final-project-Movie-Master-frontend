@@ -1,7 +1,11 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { User } from "../../types";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { User ,Message} from "../../types";
 import "./ChatPage.css";
+import { BiSend } from "react-icons/bi";
+import io from "socket.io-client";
+import { port } from "../../port";
+
 type Props = {
   currentUser: User | null;
   logout: () => void;
@@ -9,6 +13,22 @@ type Props = {
 export default function ChatPage({ currentUser, logout }: Props) {
   let navigate = useNavigate();
   const [theme, setTheme] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  // const [socket, setSocket] = useState<any>(null);
+  
+  const params = useParams();
+
+  console.log(messages);
+
+  // useEffect(() => {
+  //   const socket = io("ws://localhost:4555");
+  //   setSocket(socket);
+  //   console.log(socket);
+  //   socket.on("message", (messages) => {
+  //     setMessages(messages);
+  //   });
+  // }, []);
+
   return (
     <div className="chat-page">
       <header className="chat-page-header">
@@ -74,13 +94,50 @@ export default function ChatPage({ currentUser, logout }: Props) {
       <main className="chat-page-main">
         <div className="receiver-info">
           <img src="" alt="" />
-          <span>bbbbbbbbbbbbb</span>
+          <span></span>
         </div>
-        <div className="conversation">aaaaaaaaaaaa</div>
+        <div className="conversation">
+          {messages.map((msg) => (
+            <span>{msg.content}</span>
+          ))}
+        </div>
         <div className="sender-form">
-          <form action="">
-            <input type="text" value="" />
-            <button type="submit">send</button>
+          <form
+            className="send-message"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (e.target.text.value) {
+                e.preventDefault();
+                const data = {
+                  content: e.target.text.value,
+                  userId: currentUser?.id,
+                };
+                fetch(`http://localhost:${port}/message`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                })
+                  .then((resp) => resp.json())
+                  .then((data) => {
+                    if (data.error) {
+                      alert(data.error);
+                      console.log(data.error);
+                    } else {
+                      fetch(`http://localhost:${port}/messages`)
+                        .then((resp) => resp.json())
+                        .then((msg) => setMessages(msg));
+                    }
+                  });
+                e.target.text.value = "";
+              }
+            }}
+          >
+            <input name="text" placeholder="Send a message here...." />
+            <button type="submit">
+              <BiSend className="sent-icon" />
+            </button>
           </form>
         </div>
       </main>

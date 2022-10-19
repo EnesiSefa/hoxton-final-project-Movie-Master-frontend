@@ -32,15 +32,25 @@
 }
 
 .reviews {
-  /* background-color: #b0a295; */
-  backdrop-filter: invert(80%);
+  
+  color: white;
+  
   margin-top: 43px;
+  
+}
+.review-list{
+  display: grid;
+  grid-gap: 20px;
+  /* justify-content: start; */
 }
 
 .single-review {
   list-style: none;
-  /* outlinet: 1px black solid; */
-  border-bottom: 1px black solid;
+  border: #294152 1px solid;
+  background-color: #294152;
+  width: 20vw;
+  
+  
 }
 .single-review-user{
   display: grid;

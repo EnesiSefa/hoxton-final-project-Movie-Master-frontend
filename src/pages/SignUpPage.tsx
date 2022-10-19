@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { port } from "../port";
 import "./SignUpPage.css";
 type Props = {
   login: (data: any) => void;
@@ -6,14 +7,14 @@ type Props = {
 
 export default function SignUpPage({ login }: Props) {
   let navigate = useNavigate();
-  
 
   return (
     <div className="sign-up-page">
-      <form className="sign-up-form"
+      <form
+        className="sign-up-form"
         onSubmit={(e) => {
           e.preventDefault();
-          fetch(`http://localhost:4008/sign-up`, {
+          fetch(`http://localhost:${port}/sign-up`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -43,22 +44,48 @@ export default function SignUpPage({ login }: Props) {
         }}
       >
         <label htmlFor="">
-          <input className="sign-up-input" type="text" name="email" placeholder="email..." />
+          <input
+            className="sign-up-input"
+            type="text"
+            name="email"
+            placeholder="email..."
+          />
         </label>
         <label htmlFor="">
-          <input className="sign-up-input" type="text" name="password" placeholder="password" />
+          <input
+            className="sign-up-input"
+            type="text"
+            name="password"
+            placeholder="password"
+          />
         </label>
 
         <label htmlFor="">
-          <input className="sign-up-input" type="text" name="profilePic" placeholder="profile pic" />
+          <input
+            className="sign-up-input"
+            type="text"
+            name="profilePic"
+            placeholder="profile pic"
+          />
         </label>
         <label htmlFor="">
-          <input className="sign-up-input" type="text" name="username" placeholder="username" />
+          <input
+            className="sign-up-input"
+            type="text"
+            name="username"
+            placeholder="username"
+          />
         </label>
-        <button className="sign-up-button" type="submit">Sign Up</button>
+        <button className="sign-up-button" type="submit">
+          Sign Up
+        </button>
       </form>
-      <h3 className="sign-up-h3">Already have an account <Link className="sign-up-link" to={"/SignIn"}>Sign in</Link></h3>
-      
+      <h3 className="sign-up-h3">
+        Already have an account{" "}
+        <Link className="sign-up-link" to={"/SignIn"}>
+          Sign in
+        </Link>
+      </h3>
     </div>
   );
 }
