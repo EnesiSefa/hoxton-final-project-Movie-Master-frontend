@@ -15,6 +15,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [favorites, setFavorites] = useState<Favorite[]>([]);
+  const [receiver, setReceiver] = useState<User| null>(null);
 
   function login(data: any) {
     console.log(2);
@@ -79,6 +80,7 @@ function App() {
               currentUser={currentUser}
               logout={logout}
               setFavorites={setFavorites}
+              setReceiver={setReceiver}
             />
           }
         />
@@ -92,7 +94,7 @@ function App() {
         />
         <Route
           path="/Chat"
-          element={<ChatPage currentUser={currentUser} logout={logout} />}
+          element={<ChatPage currentUser={currentUser} logout={logout} receiver={receiver}/>}
         />
       </Routes>
     </div>

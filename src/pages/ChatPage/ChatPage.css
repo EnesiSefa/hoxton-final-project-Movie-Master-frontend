@@ -11,5 +11,6 @@
 
 .chat-page-main {
   display: grid;
+  justify-content: center;
   
 }

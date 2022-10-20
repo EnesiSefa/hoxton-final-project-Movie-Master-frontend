@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { User ,Message} from "../../types";
+import { User, Message } from "../../types";
 import "./ChatPage.css";
 import { BiSend } from "react-icons/bi";
 import io from "socket.io-client";
@@ -9,17 +9,23 @@ import { port } from "../../port";
 type Props = {
   currentUser: User | null;
   logout: () => void;
+  receiver: User | null;
 };
-export default function ChatPage({ currentUser, logout }: Props) {
+export default function ChatPage({ currentUser, logout, receiver }: Props) {
   let navigate = useNavigate();
+
   const [theme, setTheme] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   // const [socket, setSocket] = useState<any>(null);
-  
+
   const params = useParams();
 
   console.log(messages);
-
+useEffect(()=>{
+  fetch(`http://localhost:${port}/messages`)
+  .then((resp) => resp.json())
+  .then((msg) => setMessages(msg));
+},[])
   // useEffect(() => {
   //   const socket = io("ws://localhost:4555");
   //   setSocket(socket);
@@ -28,6 +34,7 @@ export default function ChatPage({ currentUser, logout }: Props) {
   //     setMessages(messages);
   //   });
   // }, []);
+  if (!receiver) return <p>Loading</p>;
 
   return (
     <div className="chat-page">
@@ -93,13 +100,15 @@ export default function ChatPage({ currentUser, logout }: Props) {
       </header>
       <main className="chat-page-main">
         <div className="receiver-info">
-          <img src="" alt="" />
-          <span></span>
+          <img src={receiver.profilePic} alt="" />
+          <span>{receiver.username}</span>
         </div>
         <div className="conversation">
           {messages.map((msg) => (
             <span>{msg.content}</span>
           ))}
+
+          <span>{receiver.receivedMessages}</span>
         </div>
         <div className="sender-form">
           <form
@@ -110,7 +119,8 @@ export default function ChatPage({ currentUser, logout }: Props) {
                 e.preventDefault();
                 const data = {
                   content: e.target.text.value,
-                  userId: currentUser?.id,
+                  senderId: currentUser?.id,
+                  receiverId: receiver.id,
                 };
                 fetch(`http://localhost:${port}/message`, {
                   method: "POST",
@@ -139,6 +149,7 @@ export default function ChatPage({ currentUser, logout }: Props) {
               <BiSend className="sent-icon" />
             </button>
           </form>
+          <img height={50} src={currentUser?.profilePic} alt="" />
         </div>
       </main>
     </div>

@@ -12,18 +12,20 @@ import { IoIosRemoveCircleOutline } from "react-icons/io";
 import ReactPlayer from "react-player";
 
 import "./MovieDetails.css";
-import { Favorite, Movie, User } from "../types";
+import { Favorite, Message, Movie, User } from "../types";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { port } from "../port";
 type Props = {
   currentUser: User | null;
   logout: () => void;
   setFavorites: (val: Favorite[]) => void;
+  setReceiver: (val: User) => void;
 };
 export default function MovieDetails({
   currentUser,
   logout,
   setFavorites,
+  setReceiver,
 }: Props) {
   let navigate = useNavigate();
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -127,7 +129,15 @@ export default function MovieDetails({
             <ul className="review-list">
               {movie?.reviews?.map((review) => (
                 <li className="single-review">
-                  <div className="single-review-user">
+                  <div
+                    className="single-review-user"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if(!review.user) return
+                      setReceiver(review.user)
+                      navigate("/Chat")
+                    }}
+                  >
                     <img src={review.user?.profilePic} height={40} alt="" />
                     <span>{review.user?.username}</span>
                   </div>
@@ -147,6 +157,7 @@ export default function MovieDetails({
               ))}
             </ul>
           </div>
+          {/* this form allows the User to add a Review to the Movie */}
           <form
             className="add-comment-form"
             onSubmit={(e) => {
@@ -194,40 +205,42 @@ export default function MovieDetails({
         </div>
       </main>
       <footer>
+        {/* this form button allows the User to add a Movie to his the Favorite playlist */}
         {currentUser && (
-          <><p>Add to favorites</p>
-          <button
-            className="favorite-button"
-            onClick={(e) => {
-              e.preventDefault();
-              const data = {
-                userId: currentUser?.id,
-                movieId: movie?.id,
-              };
-              fetch(`http://localhost:${port}/addMovieToFavorite`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-              })
-                .then((resp) => resp.json())
-                .then((data) => {
-                  if (data.error) {
-                    alert(data.error);
-                    console.log(data.error);
-                  } else {
-                    fetch(`http://localhost:${port}/favorites`)
-                      .then((resp) => resp.json())
-                      .then((favorites) => setFavorites(favorites));
-                  }
-                });
-            }}
-          >
-            ❤️
-          </button></>
+          <>
+            <p>Add to favorites</p>
+            <button
+              className="favorite-button"
+              onClick={(e) => {
+                e.preventDefault();
+                const data = {
+                  userId: currentUser?.id,
+                  movieId: movie?.id,
+                };
+                fetch(`http://localhost:${port}/addMovieToFavorite`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(data),
+                })
+                  .then((resp) => resp.json())
+                  .then((data) => {
+                    if (data.error) {
+                      alert(data.error);
+                      console.log(data.error);
+                    } else {
+                      fetch(`http://localhost:${port}/favorites`)
+                        .then((resp) => resp.json())
+                        .then((favorites) => setFavorites(favorites));
+                    }
+                  });
+              }}
+            >
+              ❤️
+            </button>
+          </>
         )}
-        
       </footer>
     </div>
   );

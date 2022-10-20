@@ -6,9 +6,10 @@ export type User = {
   password: string;
   reviews: Review[];
   favorites: Favorite[];
-  friendships: Friendship[]
-  messages: Message[]
+  friendships: Friendship[];
   likeDislike?: LikeDislike;
+  sentMessages: Message[];
+  receivedMessages: Message[];
 };
 export type Friendship = {
   id: number;
@@ -19,9 +20,10 @@ export type Friendship = {
 export type Message = {
   id: number;
   content: string;
-  user: User;
-  userId: number;
-  
+  sender: User;
+  senderId: number;
+  receiver: User;
+  receiverId: number;
 };
 
 export type Movie = {
@@ -38,7 +40,6 @@ export type Movie = {
   favoriteId?: number;
   reviews: Review[];
 };
-
 
 export type Favorite = {
   id: number;
