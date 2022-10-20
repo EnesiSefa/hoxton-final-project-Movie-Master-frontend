@@ -52,6 +52,7 @@ function App() {
       <Routes>
         <Route index element={<Navigate replace to="/MovieMasterHome" />} />
         <Route path="/MovieMasterHome" element={<HomePage logout={logout} />} />
+        <Route path="/MovieMasterHome/page/:page" element={<HomePage logout={logout} />} />
         <Route path="/movie/:id" element={<MovieDetails logout={logout} />} />
         <Route path="/SignIn" element={<SignInPage login={login} />} />
         <Route path="/SignUp" element={<SignUpPage login={login} />} />

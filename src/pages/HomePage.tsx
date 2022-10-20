@@ -1,23 +1,48 @@
 import { Movie, User } from "../types";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./HomePage.css";
 import { useStore } from "../zustand/store";
 import { port } from "../port";
+import ReactPaginate from "react-paginate";
 type Props = {
   logout: () => void;
 };
 
 export default function HomePage({ logout }: Props) {
-   useEffect(() => {
-    fetch(`http://localhost:${port}/movies/1`)
-      .then((resp) => resp.json())
-      .then((movies) => setMovies(movies));
-  }, []);
-  
+  const [pageNumber, setPageNumber] = useState(0);
+  const [count, setCount] = useState(0);
+  const params = useParams();
   let navigate = useNavigate();
 
-  const { currentUser, movies,setMovies, theme, setTheme } = useStore();
+  useEffect(() => {
+    fetch(`http://localhost:${port}/movieCount`)
+      .then((resp) => resp.json())
+      .then((movies) => setCount(movies.movies));
+    if (params.page === undefined) {
+      fetch(`http://localhost:${port}/movies/1`)
+        .then((resp) => resp.json())
+        .then((movies) => setMovies(movies));
+    } else {
+      fetch(`http://localhost:${port}/movies/${params.page}`)
+        .then((resp) => resp.json())
+        .then((movies) => setMovies(movies));
+    }
+  }, [params.page]);
+
+  function handleChangingPageNumber(selected: any) {
+    setPageNumber(selected);
+  }
+  const changePage = ({ selected }: any) => {
+    handleChangingPageNumber(selected);
+    navigate(`/MovieMasterHome/page/${selected + 1}`);
+  };
+
+  const { currentUser, movies, setMovies, theme, setTheme } = useStore();
+  let pageCount;
+  console.log(count);
+  pageCount = Math.ceil(count / 1); // items per page
+
   return (
     <div className={theme ? "home-page-dark" : "home-page"}>
       <h1 className={theme ? "movie-master-dark" : "movie-master"}>
@@ -105,6 +130,19 @@ export default function HomePage({ logout }: Props) {
               </li>
             ))}
           </ul>
+        </div>
+        <div>
+          <ReactPaginate
+            previousLabel={"< Previous"}
+            nextLabel={"Next >"}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            containerClassName={"paginationBttns"}
+            previousLinkClassName={"previousBttn"}
+            nextLinkClassName={"nextBttn"}
+            disabledClassName={"paginationDisabled"}
+            activeClassName={"paginationActive"}
+          />
         </div>
       </main>
       <footer className="footer">
