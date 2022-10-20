@@ -15,22 +15,25 @@ import "./MovieDetails.css";
 import { Favorite, Message, Movie, User } from "../types";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { port } from "../port";
+import { useStore } from "../zustand/store";
+
 type Props = {
-  currentUser: User | null;
   logout: () => void;
-  setFavorites: (val: Favorite[]) => void;
-  setReceiver: (val: User) => void;
 };
-export default function MovieDetails({
-  currentUser,
-  logout,
-  setFavorites,
-  setReceiver,
-}: Props) {
+export default function MovieDetails({ logout }: Props) {
   let navigate = useNavigate();
-  const [movie, setMovie] = useState<Movie | null>(null);
-  const [comment, setComment] = useState("");
-  const [theme, setTheme] = useState(false);
+
+  const {
+    movie,
+    setMovie,
+    comment,
+    setComment,
+    theme,
+    setTheme,
+    currentUser,
+    setFavorites,
+    setReceiver,
+  } = useStore();
 
   const params = useParams();
   useEffect(() => {
@@ -133,9 +136,14 @@ export default function MovieDetails({
                     className="single-review-user"
                     onClick={(e) => {
                       e.preventDefault();
-                      if(!review.user) return
-                      setReceiver(review.user)
-                      navigate("/Chat")
+                      // if (!review.user) return;
+                      console.log("this is receiver", review.user);
+                      fetch(`http://localhost:${port}/user/${review.userId}`)
+                        .then((resp) => resp.json())
+                        .then((user) => {
+                          setReceiver(user);
+                          navigate(`/Chat/${review.userId}`);
+                        });
                     }}
                   >
                     <img src={review.user?.profilePic} height={40} alt="" />

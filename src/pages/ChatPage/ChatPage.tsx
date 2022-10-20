@@ -1,40 +1,74 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { User, Message } from "../../types";
 import "./ChatPage.css";
 import { BiSend } from "react-icons/bi";
 import io from "socket.io-client";
 import { port } from "../../port";
-
+import { useStore } from "../../zustand/store";
 type Props = {
-  currentUser: User | null;
   logout: () => void;
-  receiver: User | null;
+  validate: () => void;
 };
-export default function ChatPage({ currentUser, logout, receiver }: Props) {
+export default function ChatPage({ logout, validate }: Props) {
+  const {
+    currentUser,
+    theme,
+    setTheme,
+    saveReceiver,
+    setSaveReceiver,
+    saveSender,
+    setSaveSender,
+  } = useStore();
+
   let navigate = useNavigate();
-
-  const [theme, setTheme] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
-  // const [socket, setSocket] = useState<any>(null);
-
   const params = useParams();
 
-  console.log(messages);
-useEffect(()=>{
-  fetch(`http://localhost:${port}/messages`)
-  .then((resp) => resp.json())
-  .then((msg) => setMessages(msg));
-},[])
-  // useEffect(() => {
-  //   const socket = io("ws://localhost:4555");
-  //   setSocket(socket);
-  //   console.log(socket);
-  //   socket.on("message", (messages) => {
-  //     setMessages(messages);
-  //   });
-  // }, []);
-  if (!receiver) return <p>Loading</p>;
+  async function getUser(id: number) {
+    await fetch(`http://localhost:${port}/user/${id}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.error) {
+          alert(data.error);
+        } else {
+          setSaveSender(data);
+        }
+      });
+  }
+
+  useEffect(() => {
+    //@ts-ignore
+    const user: User | null = JSON.parse(localStorage.getItem("user"));
+
+    getUser(user.id);
+  }, []);
+  useEffect(() => {
+    fetch(`http://localhost:${port}/user/${params.receiverId}`)
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.error) {
+          alert(data.error);
+        } else {
+          setSaveReceiver(data);
+        }
+      });
+  }, [params.receiverId]);
+
+  if (!saveReceiver)
+    return (
+      <div className="loading">
+        <img
+          className="loading-image"
+          src="https://i.pinimg.com/originals/90/80/60/9080607321ab98fa3e70dd24b2513a20.gif"
+          alt=""
+        />
+      </div>
+    );
 
   return (
     <div className="chat-page">
@@ -100,15 +134,25 @@ useEffect(()=>{
       </header>
       <main className="chat-page-main">
         <div className="receiver-info">
-          <img src={receiver.profilePic} alt="" />
-          <span>{receiver.username}</span>
+          <img src={saveReceiver.profilePic} height={50} alt="" />
+          <span>{saveReceiver.username}</span>
         </div>
         <div className="conversation">
-          {messages.map((msg) => (
-            <span>{msg.content}</span>
-          ))}
+          <ul className="sender-message-list">
+            {saveSender?.sentMessages.map((msg) => (
+              <li className="sender-messages">
+                <span>{msg.content}</span>
+              </li>
+            ))}
+          </ul>
 
-          <span>{receiver.receivedMessages}</span>
+          <ul className="receiver-message-list">
+            {saveReceiver.sentMessages.map((msg) => (
+              <li className="receiver-messages">
+                <span>{msg.content}</span>
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="sender-form">
           <form
@@ -120,7 +164,7 @@ useEffect(()=>{
                 const data = {
                   content: e.target.text.value,
                   senderId: currentUser?.id,
-                  receiverId: receiver.id,
+                  receiverId: saveReceiver.id,
                 };
                 fetch(`http://localhost:${port}/message`, {
                   method: "POST",
@@ -135,9 +179,7 @@ useEffect(()=>{
                       alert(data.error);
                       console.log(data.error);
                     } else {
-                      fetch(`http://localhost:${port}/messages`)
-                        .then((resp) => resp.json())
-                        .then((msg) => setMessages(msg));
+                      getUser(data.senderId);
                     }
                   });
                 e.target.text.value = "";
@@ -149,9 +191,9 @@ useEffect(()=>{
               <BiSend className="sent-icon" />
             </button>
           </form>
-          <img height={50} src={currentUser?.profilePic} alt="" />
         </div>
       </main>
+      <footer>footer</footer>
     </div>
   );
 }

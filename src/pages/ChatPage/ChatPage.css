@@ -12,5 +12,29 @@
 .chat-page-main {
   display: grid;
   justify-content: center;
-  
+  border: 1px solid black;
+}
+
+.conversation {
+  height: 200px;
+  display: grid;
+  grid-auto-flow: column;
+  overflow-y: scroll;
+}
+.sender-messages {
+  background-color: rgba(0, 128, 0, 0.26);
+  list-style: none;
+}
+
+.receiver-messages {
+  list-style: none;
+
+  background-color: rgba(128, 0, 128, 0.308);
+}
+.loading {
+  padding-left: 250px;
+  background-color: black;
+}
+.loading-image {
+  place-content: center;
 }

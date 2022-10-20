@@ -1,3 +1,24 @@
+export default interface AppStoreState {
+  currentUser: User | null;
+  movies: Movie[];
+  favorites: Favorite[];
+  receiver: User | null;
+  movie: Movie | null;
+  comment: string;
+  theme: boolean;
+  saveReceiver: User | null;
+  saveSender: User | null;
+
+  setCurrentUser: (data: User | null) => void;
+  setMovies: (data: Movie[]) => void;
+  setFavorites: (data: Favorite[]) => void;
+  setReceiver: (data: User | null) => void;
+  setMovie: (data: Movie | null) => void;
+  setComment: (data: string) => void;
+  setTheme: (data: boolean) => void;
+  setSaveReceiver: (data: User | null) => void;
+  setSaveSender: (data: User | null) => void;
+}
 export type User = {
   id: number;
   profilePic: string;
@@ -20,6 +41,7 @@ export type Friendship = {
 export type Message = {
   id: number;
   content: string;
+  timeStamp: string;
   sender: User;
   senderId: number;
   receiver: User;

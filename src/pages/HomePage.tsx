@@ -2,20 +2,27 @@ import { Movie, User } from "../types";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./HomePage.css";
-
+import { useStore } from "../zustand/store";
+import { port } from "../port";
 type Props = {
-  currentUser: User | null;
   logout: () => void;
-  login: (data: any) => void;
-  movies: Movie[];
 };
 
-export default function HomePage({ currentUser, logout, movies }: Props) {
+export default function HomePage({ logout }: Props) {
+   useEffect(() => {
+    fetch(`http://localhost:${port}/movies/1`)
+      .then((resp) => resp.json())
+      .then((movies) => setMovies(movies));
+  }, []);
+  
   let navigate = useNavigate();
-  const [theme, setTheme] = useState(false);
+
+  const { currentUser, movies,setMovies, theme, setTheme } = useStore();
   return (
     <div className={theme ? "home-page-dark" : "home-page"}>
-      <h1 className={theme? "movie-master-dark":"movie-master"}>Movie Master</h1>
+      <h1 className={theme ? "movie-master-dark" : "movie-master"}>
+        Movie Master
+      </h1>
       <header className="header">
         <form>
           <label htmlFor="search">
@@ -100,7 +107,9 @@ export default function HomePage({ currentUser, logout, movies }: Props) {
           </ul>
         </div>
       </main>
-      <footer className="footer">Copyright@ 2022 MovieMaster All rights reserved</footer>
+      <footer className="footer">
+        Copyright@ 2022 MovieMaster All rights reserved
+      </footer>
     </div>
   );
 }
