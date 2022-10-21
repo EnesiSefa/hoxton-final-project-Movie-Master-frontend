@@ -83,13 +83,13 @@ export default function MovieDetails({ logout }: Props) {
             {theme ? (
               <img
                 height={30}
-                src="https://cdn4.iconfinder.com/data/icons/multimedia-flat-30px/30/sun_light_mode_day-512.png"
+                src="https://cdn-icons-png.flaticon.com/512/4892/4892988.png"
                 alt=""
               />
             ) : (
               <img
                 height={30}
-                src="https://cdn-icons-png.flaticon.com/512/6714/6714978.png"
+                src="https://cdn4.iconfinder.com/data/icons/multimedia-flat-30px/30/sun_light_mode_day-512.png"
                 alt=""
               />
             )}

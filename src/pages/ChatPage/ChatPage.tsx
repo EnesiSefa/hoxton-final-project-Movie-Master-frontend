@@ -113,14 +113,15 @@ export default function ChatPage({ logout, validate }: Props) {
             <button type="submit">Sign in</button>
           </form>
         )}
-        <div>
-          <label htmlFor="checkbox">
+        <div >
+          <label  htmlFor="checkbox">
             {theme ? (
               <p style={{ color: "white" }}>Light mode</p>
             ) : (
               <p>Dark mode</p>
             )}
             <input
+            
               type="checkbox"
               checked={false}
               onChange={() => {
@@ -169,9 +170,9 @@ export default function ChatPage({ logout, validate }: Props) {
             ))}
           </ul>
         </div>
-        <div className="sender-form">
+        <div className="send-message-div">
           <form
-            className="send-message"
+            className="send-message-form"
             onSubmit={(e) => {
               e.preventDefault();
               if (e.target.text.value) {
@@ -201,8 +202,8 @@ export default function ChatPage({ logout, validate }: Props) {
               }
             }}
           >
-            <input name="text" placeholder="Send a message here...." />
-            <button type="submit">
+            <input className="message-input" name="text" placeholder="Send a message here...." />
+            <button className="button-message" type="submit">
               <BiSend className="sent-icon" />
             </button>
           </form>

@@ -81,14 +81,14 @@
 }
 .movie-thumbnail:hover {
   box-shadow: 15px 12px 3px #052b46;
-  transition: 1s;
+  transition: 0.5s;
 }
 .movie-thumbnail-dark {
   transition: 1s;
 }
 .movie-thumbnail-dark:hover {
-  box-shadow: 10px 10px 15px #1e92e6;
-  transition: 1s;
+  box-shadow: 0px 0px 20px 1px #1e92e6;
+  transition: 0.5s;
 }
 
 .footer {

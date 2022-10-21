@@ -31,7 +31,7 @@
   background-color: rgba(0, 128, 0, 0.26);
   list-style: none;
 }
-.receiver-message-list{
+.receiver-message-list {
   padding-top: 10px;
   display: grid;
   grid-gap: 10px;
@@ -43,12 +43,39 @@
 
   background-color: rgba(128, 0, 128, 0.308);
 }
+.send-message-div {
+  display: grid;
+  align-content: center;
+  
+  /* background-color: aquamarine; */
+}
+.send-message-form {
+  display: grid;
+  grid-auto-flow: column;
+  border-radius: 5px;
+  background-color: #a39b29e0;
+  /* grid-gap: 20px; */
+}
+.message-input {
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: #efefef;
+}
+.button-message {
+  transition: 1s;
+}
+.button-message:hover {
+  background-color: #1f30c5;
+  color: white;
+  transition: 0.5s;
+  border: none;
+  border-radius: 5px;
+}
 .loading {
   padding-left: 250px;
   background-color: black;
 }
 .loading-image {
   place-content: center;
-}
-.delete-button-chat {
 }
