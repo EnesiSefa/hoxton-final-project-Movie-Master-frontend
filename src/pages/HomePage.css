@@ -25,13 +25,10 @@
   padding-left: 20px;
   grid-gap: 40px;
 }
-.movie-master{
-  
+.movie-master {
   text-align: center;
-  
-  
 }
-.movie-master-dark{
+.movie-master-dark {
   color: #0095ff;
   text-align: center;
 }
@@ -53,10 +50,17 @@
   color: white;
 }
 .main {
+  display: grid;
+  
+  grid-template:
+    "video-section" 1fr
+    "pagination" 0.1fr/ 1fr;
   grid-area: main;
 }
 .video-section {
   display: grid;
+  padding-bottom: 50px;
+  padding-left: 50px;
 }
 
 .movie-list {
@@ -91,7 +95,9 @@
   grid-area: footer;
   place-content: center;
 }
-
+.pagination {
+  padding-top: 50px;
+}
 .paginationBttns a {
   padding: 15px;
   margin: 8px;
@@ -125,7 +131,8 @@
   height: 60px;
   list-style: none;
 
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   justify-content: center;
   justify-items: center;
 

@@ -5,6 +5,7 @@ import "./HomePage.css";
 import { useStore } from "../zustand/store";
 import { port } from "../port";
 import ReactPaginate from "react-paginate";
+import { MdOutlineLightMode } from "react-icons/md";
 type Props = {
   logout: () => void;
 };
@@ -49,11 +50,6 @@ export default function HomePage({ logout }: Props) {
         Movie Master
       </h1>
       <header className="header">
-        <form>
-          <label htmlFor="search">
-            <input type="text" placeholder="search..." name="search" />
-          </label>
-        </form>
         {currentUser ? (
           <>
             <form
@@ -90,13 +86,23 @@ export default function HomePage({ logout }: Props) {
         <div>
           <label htmlFor="checkbox">
             {theme ? (
-              <p style={{ color: "white" }}>Light mode</p>
+              <img
+                height={30}
+                src="https://cdn4.iconfinder.com/data/icons/multimedia-flat-30px/30/sun_light_mode_day-512.png"
+                alt=""
+              />
             ) : (
-              <p>Dark mode</p>
+              <img
+                height={30}
+                src="https://cdn-icons-png.flaticon.com/512/6714/6714978.png"
+                alt=""
+              />
             )}
             <input
               name="checkbox"
+              id="checkbox"
               type="checkbox"
+              style={{ opacity: 0 }}
               onChange={() => {
                 if (theme) {
                   setTheme(false);
@@ -131,7 +137,7 @@ export default function HomePage({ logout }: Props) {
             ))}
           </ul>
         </div>
-        <div>
+        <div className="pagination">
           <ReactPaginate
             previousLabel={"< Previous"}
             nextLabel={"Next >"}

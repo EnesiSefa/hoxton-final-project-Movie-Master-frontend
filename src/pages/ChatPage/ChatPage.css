@@ -20,12 +20,24 @@
   display: grid;
   grid-auto-flow: column;
   overflow-y: scroll;
+  grid-gap: 20px;
+}
+.sender-message-list {
+  display: grid;
+  grid-gap: 10px;
+  align-items: center;
 }
 .sender-messages {
   background-color: rgba(0, 128, 0, 0.26);
   list-style: none;
 }
+.receiver-message-list{
+  padding-top: 10px;
+  display: grid;
+  grid-gap: 10px;
 
+  align-items: center;
+}
 .receiver-messages {
   list-style: none;
 
@@ -37,4 +49,6 @@
 }
 .loading-image {
   place-content: center;
+}
+.delete-button-chat {
 }

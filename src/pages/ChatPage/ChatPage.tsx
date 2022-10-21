@@ -11,6 +11,7 @@ import { BiSend } from "react-icons/bi";
 import io from "socket.io-client";
 import { port } from "../../port";
 import { useStore } from "../../zustand/store";
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 type Props = {
   logout: () => void;
   validate: () => void;
@@ -86,6 +87,7 @@ export default function ChatPage({ logout, validate }: Props) {
             <form
               onSubmit={() => {
                 logout();
+                navigate("/MovieMasterHome")
               }}
             >
               <button type="submit">Sign out </button>
@@ -141,7 +143,19 @@ export default function ChatPage({ logout, validate }: Props) {
           <ul className="sender-message-list">
             {saveSender?.sentMessages.map((msg) => (
               <li className="sender-messages">
+                <img height={15} src={saveSender.profilePic} alt="" />
                 <span>{msg.content}</span>
+                <button
+                  className="delete-button-chat"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    fetch(`http://localhost:${port}/message/${msg.id}`, {
+                      method: "DELETE",
+                    }).then((res) => res.json());
+                  }}
+                >
+                  <IoIosRemoveCircleOutline />
+                </button>
               </li>
             ))}
           </ul>
@@ -150,6 +164,7 @@ export default function ChatPage({ logout, validate }: Props) {
             {saveReceiver.sentMessages.map((msg) => (
               <li className="receiver-messages">
                 <span>{msg.content}</span>
+                <img height={15} src={saveReceiver.profilePic} alt="" />
               </li>
             ))}
           </ul>

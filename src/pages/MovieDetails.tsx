@@ -48,11 +48,6 @@ export default function MovieDetails({ logout }: Props) {
         <div>
           <Link to={"/MovieMasterHome"}>Movie Master</Link>
         </div>
-        <form>
-          <label htmlFor="search">
-            <input type="text" placeholder="search..." name="search" />
-          </label>
-        </form>
         {currentUser ? (
           <>
             <form
@@ -84,14 +79,24 @@ export default function MovieDetails({ logout }: Props) {
           </form>
         )}
         <div>
-          <label htmlFor="checkbox">
+          <label htmlFor="checkbox-id">
             {theme ? (
-              <p style={{ color: "white" }}>Light mode</p>
+              <img
+                height={30}
+                src="https://cdn4.iconfinder.com/data/icons/multimedia-flat-30px/30/sun_light_mode_day-512.png"
+                alt=""
+              />
             ) : (
-              <p>Dark mode</p>
+              <img
+                height={30}
+                src="https://cdn-icons-png.flaticon.com/512/6714/6714978.png"
+                alt=""
+              />
             )}
             <input
               type="checkbox"
+              id="checkbox-id"
+              style={{ opacity: 0 }}
               checked={false}
               onChange={() => {
                 if (theme) {
@@ -136,14 +141,15 @@ export default function MovieDetails({ logout }: Props) {
                     className="single-review-user"
                     onClick={(e) => {
                       e.preventDefault();
-                      // if (!review.user) return;
-                      console.log("this is receiver", review.user);
-                      fetch(`http://localhost:${port}/user/${review.userId}`)
-                        .then((resp) => resp.json())
-                        .then((user) => {
-                          setReceiver(user);
-                          navigate(`/Chat/${review.userId}`);
-                        });
+                      if (currentUser) {
+                        console.log("this is receiver", review.user);
+                        fetch(`http://localhost:${port}/user/${review.userId}`)
+                          .then((resp) => resp.json())
+                          .then((user) => {
+                            setReceiver(user);
+                            navigate(`/Chat/${review.userId}`);
+                          });
+                      }
                     }}
                   >
                     <img src={review.user?.profilePic} height={40} alt="" />
