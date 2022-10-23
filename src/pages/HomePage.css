@@ -24,7 +24,7 @@
     "header" 100px
     "main" 1fr
     "footer" 40px / 1fr;
-    background: linear-gradient(#061e44, #740b63);
+    background: linear-gradient(#061e44, #550848);
   /* place-items: center; */
   padding-left: 20px;
   grid-gap: 40px;

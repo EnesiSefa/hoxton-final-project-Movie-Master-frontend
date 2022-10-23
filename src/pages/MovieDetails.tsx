@@ -33,7 +33,6 @@ export default function MovieDetails({ logout }: Props) {
     setReceiver,
   } = useStore();
   const [likes, setLikes] = useState([]);
- 
 
   const params = useParams();
   useEffect(() => {
@@ -180,7 +179,18 @@ export default function MovieDetails({ logout }: Props) {
                   </div>
                   <div className="review-comment">
                     <p>{review.comment}</p>
-                    <button className="delete-button">
+                    <button
+                      className="delete-button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        fetch(
+                          `http://localhost:${port}/deleteReview/${review.id}`,
+                          {
+                            method: "DELETE",
+                          }
+                        ).then((res) => res.json());
+                      }}
+                    >
                       <IoIosRemoveCircleOutline />
                     </button>
                     <button
@@ -231,6 +241,7 @@ export default function MovieDetails({ logout }: Props) {
                 movieId: movie?.id,
                 comment,
               };
+
               fetch(`http://localhost:${port}/addReviewToMovie`, {
                 method: "POST",
                 headers: {
@@ -249,6 +260,7 @@ export default function MovieDetails({ logout }: Props) {
                       .then((singleMovie) => setMovie(singleMovie));
                   }
                 });
+              
             }}
           >
             {currentUser && (
@@ -259,6 +271,7 @@ export default function MovieDetails({ logout }: Props) {
                     name="comment"
                     onChange={(e) => {
                       setComment(e.target.value);
+                      e.target.text.value = "";
                     }}
                   />
                 </label>

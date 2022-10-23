@@ -23,6 +23,7 @@ export default function FavoritePage() {
           <p>Movie Master</p>
         </Link>
       </header>
+      <h1>Favorites</h1>
       <main className="favorite-page-main">
         <div className="user-information">
           <h2>{currentUser.username}</h2>
