@@ -30,7 +30,7 @@ export default function FavoritePage() {
         </div>
         <div className="user-favorite-movies">
           <ul className="user-favorite-movie-list">
-            {favorites.map((favorite) =>
+            {currentUser.favorites.map((favorite) =>
               favorite.movies?.map((movie) => (
                 <li className="user-favorite-movie-item">
                   <img src={movie.thumbnail} alt="" height={200} />

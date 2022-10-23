@@ -61,7 +61,12 @@ export default function HomePage({ logout }: Props) {
             </form>
             <div className="home-page-current-user">
               <Link to={"/Favorites"}>
-                <img src={currentUser.profilePic} alt="" height={50} />
+                <img
+                  className="home-page-profile-pic"
+                  src={currentUser.profilePic}
+                  alt=""
+                  height={50}
+                />
               </Link>
               <span
                 className={
@@ -122,7 +127,10 @@ export default function HomePage({ logout }: Props) {
                 <h4 className={theme ? "movie-title-dark" : "movie-title"}>
                   {movie.title}
                 </h4>
-                <p style={{ color: "red" }}>({movie.year})</p>
+                
+                <p style={theme ? { color: "#0095ff" } : { color: "white" }}>
+                  ({movie.year})
+                </p>
                 <Link to={`/movie/${movie.id}`}>
                   <img
                     className={

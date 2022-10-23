@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaBeer } from "react-icons/fa";
-import { BsPlay } from "react-icons/bs";
-import { GrFavorite } from "react-icons/gr";
+import { GoSignOut } from "react-icons/go";
 import {
   AiOutlineDislike,
   AiOutlineHeart,
@@ -34,6 +32,8 @@ export default function MovieDetails({ logout }: Props) {
     setFavorites,
     setReceiver,
   } = useStore();
+  const [likes, setLikes] = useState([]);
+ 
 
   const params = useParams();
   useEffect(() => {
@@ -46,7 +46,11 @@ export default function MovieDetails({ logout }: Props) {
     <div className={theme ? "movie-details-dark" : "movie-details"}>
       <header className="movie-details-header">
         <div>
-          <Link to={"/MovieMasterHome"}>Movie Master</Link>
+          <Link to={"/MovieMasterHome"}>
+            <h1 className={theme ? "movie-master-dark" : "movie-master"}>
+              Movie Master
+            </h1>
+          </Link>
         </div>
         {currentUser ? (
           <>
@@ -55,7 +59,10 @@ export default function MovieDetails({ logout }: Props) {
                 logout();
               }}
             >
-              <button type="submit">Sign out </button>
+              <button type="submit">
+                Sign out
+                <GoSignOut />{" "}
+              </button>
             </form>
             <div className="movie-details-current-user">
               <img src={currentUser.profilePic} alt="" height={50} />
@@ -65,7 +72,13 @@ export default function MovieDetails({ logout }: Props) {
             </div>
             <div>
               <span>
-                <Link to={"/Favorites"}>Favorites</Link>
+                <Link to={"/Favorites"}>
+                  <h1
+                    style={theme ? { color: "#8ecae6" } : { color: "#fb8500" }}
+                  >
+                    Favorites
+                  </h1>
+                </Link>
               </span>
             </div>
           </>
@@ -112,7 +125,9 @@ export default function MovieDetails({ logout }: Props) {
 
       <main className="movie-details-main">
         <div className="movie-section">
-          <h1>{movie?.title}</h1>
+          <h1 style={theme ? { color: "white" } : { color: "lightblue" }}>
+            {movie?.title}
+          </h1>
           <div className="movie-player">
             <iframe
               id="videoPlayer"
@@ -124,12 +139,20 @@ export default function MovieDetails({ logout }: Props) {
             ></iframe>
           </div>
           <div className="movie-info">
-            <h3>Genre:{movie?.genre}</h3>
-            <h3>Duration:{movie?.duration} min</h3>
-            <h3>Rating:{movie?.rating}/100</h3>
+            <h3 style={theme ? { color: "white" } : { color: "black" }}>
+              Genre: {movie?.genre}
+            </h3>
+            <h3 style={theme ? { color: "white" } : { color: "black" }}>
+              Duration: {movie?.duration} min
+            </h3>
+            <h3 style={theme ? { color: "white" } : { color: "black" }}>
+              Rating: {movie?.rating}/100
+            </h3>
           </div>
           <div className="description">
-            <p>{movie?.description}</p>
+            <p style={theme ? { color: "white" } : { color: "black" }}>
+              {movie?.description}
+            </p>
           </div>
         </div>
         <div className="review-section">
@@ -160,8 +183,35 @@ export default function MovieDetails({ logout }: Props) {
                     <button className="delete-button">
                       <IoIosRemoveCircleOutline />
                     </button>
-                    <button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const data = {
+                          reviewId: review.id,
+                          userId: currentUser?.id,
+                        };
+                        fetch(`http://localhost:${port}/like`, {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(data),
+                        })
+                          .then((resp) => resp.json())
+                          .then((data) => {
+                            if (data.error) {
+                              alert(data.error);
+                              console.log(data.error);
+                            } else {
+                              fetch(`http://localhost:${port}/likes`)
+                                .then((resp) => resp.json())
+                                .then((likes) => setLikes(likes));
+                            }
+                          });
+                      }}
+                    >
                       <AiOutlineLike />
+                      {likes.length}
                     </button>
                     <button>
                       <AiOutlineDislike />
@@ -222,7 +272,9 @@ export default function MovieDetails({ logout }: Props) {
         {/* this form button allows the User to add a Movie to his the Favorite playlist */}
         {currentUser && (
           <>
-            <p>Add to favorites</p>
+            <p style={theme ? { color: "white" } : { color: "black" }}>
+              Add to favorites
+            </p>
             <button
               className="favorite-button"
               onClick={(e) => {

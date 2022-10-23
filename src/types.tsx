@@ -28,7 +28,8 @@ export type User = {
   reviews: Review[];
   favorites: Favorite[];
   friendships: Friendship[];
-  likeDislike?: LikeDislike;
+  likes: Like[];
+  dislikes: Dislike[];
   sentMessages: Message[];
   receivedMessages: Message[];
 };
@@ -77,13 +78,20 @@ export type Review = {
   userId?: number;
   Movie?: Movie;
   movieId?: number;
-  likeDislike: LikeDislike[];
+  likes: Like[];
+  dislikes: Dislike[];
 };
 
-export type LikeDislike = {
+export type Like = {
   id: number;
-  like: boolean;
-  dislike: boolean;
+  review: Review;
+  reviewId?: number;
+  user?: User;
+  userId?: number;
+};
+export type Dislike = {
+  id: number;
+
   review: Review;
   reviewId?: number;
   user?: User;
