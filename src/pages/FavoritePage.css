@@ -35,3 +35,6 @@
   grid-template-columns: auto auto;
   list-style: none;
 }
+.movie-master-favorites{
+  text-decoration: none;
+}

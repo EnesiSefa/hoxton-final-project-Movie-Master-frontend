@@ -33,6 +33,7 @@ export default function MovieDetails({ logout }: Props) {
     setReceiver,
   } = useStore();
   const [likes, setLikes] = useState([]);
+  const [dislikes, setDislikes] = useState([]);
 
   const params = useParams();
   useEffect(() => {
@@ -64,7 +65,7 @@ export default function MovieDetails({ logout }: Props) {
               </button>
             </form>
             <div className="movie-details-current-user">
-              <img src={currentUser.profilePic} alt="" height={50} />
+              <img className="movie-details-current-user-pic" src={currentUser.profilePic} alt="" height={50} />
               <span className="movie-details-current-user-span">
                 {currentUser.username}
               </span>
@@ -223,8 +224,35 @@ export default function MovieDetails({ logout }: Props) {
                       <AiOutlineLike />
                       {likes.length}
                     </button>
-                    <button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const data = {
+                          reviewId: review.id,
+                          userId: currentUser?.id,
+                        };
+                        fetch(`http://localhost:${port}/dislike`, {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(data),
+                        })
+                          .then((resp) => resp.json())
+                          .then((data) => {
+                            if (data.error) {
+                              alert(data.error);
+                              console.log(data.error);
+                            } else {
+                              fetch(`http://localhost:${port}/dislikes`)
+                                .then((resp) => resp.json())
+                                .then((dislikes) => setDislikes(dislikes));
+                            }
+                          });
+                      }}
+                    >
                       <AiOutlineDislike />
+                      {dislikes.length}
                     </button>
                   </div>
                 </li>
@@ -236,6 +264,7 @@ export default function MovieDetails({ logout }: Props) {
             className="add-comment-form"
             onSubmit={(e) => {
               e.preventDefault();
+
               const data = {
                 userId: currentUser?.id,
                 movieId: movie?.id,
@@ -260,7 +289,7 @@ export default function MovieDetails({ logout }: Props) {
                       .then((singleMovie) => setMovie(singleMovie));
                   }
                 });
-              
+              e.target.comment.value = "";
             }}
           >
             {currentUser && (
@@ -271,7 +300,6 @@ export default function MovieDetails({ logout }: Props) {
                     name="comment"
                     onChange={(e) => {
                       setComment(e.target.value);
-                      e.target.text.value = "";
                     }}
                   />
                 </label>

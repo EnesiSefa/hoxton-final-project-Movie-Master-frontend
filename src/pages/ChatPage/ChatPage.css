@@ -3,16 +3,25 @@
   height: 100vh;
   background-color: #7395ae;
 }
+.chat-page-dark {
+  display: grid;
+  height: 100vh;
+  background-color: #022741;
+}
 
 .chat-page-header {
   display: grid;
   grid-auto-flow: column;
+}
+.chat-page-current-user-pic {
+  clip-path: circle();
 }
 
 .chat-page-main {
   display: grid;
   justify-content: center;
   border: 1px solid black;
+  background-color: #7773ae;
 }
 
 .conversation {
@@ -21,6 +30,7 @@
   grid-auto-flow: column;
   overflow-y: scroll;
   grid-gap: 20px;
+  outline: 1px solid black;
 }
 .sender-message-list {
   display: grid;
@@ -46,7 +56,7 @@
 .send-message-div {
   display: grid;
   align-content: center;
-  
+
   /* background-color: aquamarine; */
 }
 .send-message-form {

@@ -72,35 +72,35 @@ export default function ChatPage({ logout, validate }: Props) {
     );
 
   return (
-    <div className="chat-page">
+    <div className={theme ? "chat-page" : "chat-page-dark"}>
       <header className="chat-page-header">
         <div>
-          <Link to={"/MovieMasterHome"}>Movie Master</Link>
+          <Link to={"/MovieMasterHome"}>
+            <h1>Movie Master</h1>
+          </Link>
         </div>
-        <form>
-          <label htmlFor="search">
-            <input type="text" placeholder="search..." name="search" />
-          </label>
-        </form>
+
         {currentUser ? (
           <>
             <form
               onSubmit={() => {
                 logout();
-                navigate("/MovieMasterHome")
+                navigate("/MovieMasterHome");
               }}
             >
               <button type="submit">Sign out </button>
             </form>
             <div className="chat-page-current-user">
-              <img src={currentUser.profilePic} alt="" height={50} />
+              <img className="chat-page-current-user-pic" src={currentUser.profilePic} alt="" height={50} />
               <span className="chat-page-current-user-span">
                 {currentUser.username}
               </span>
             </div>
             <div>
               <span>
-                <Link to={"/Favorites"}>Favorites</Link>
+                <Link to={"/Favorites"}>
+                  <h1>Favorites</h1>
+                </Link>
               </span>
             </div>
           </>
@@ -113,17 +113,26 @@ export default function ChatPage({ logout, validate }: Props) {
             <button type="submit">Sign in</button>
           </form>
         )}
-        <div >
-          <label  htmlFor="checkbox">
+        <div>
+          <label htmlFor="checkbox">
             {theme ? (
-              <p style={{ color: "white" }}>Light mode</p>
+              <img
+                height={30}
+                src="https://cdn-icons-png.flaticon.com/512/4892/4892988.png"
+                alt=""
+              />
             ) : (
-              <p>Dark mode</p>
+              <img
+                height={30}
+                src="https://cdn4.iconfinder.com/data/icons/multimedia-flat-30px/30/sun_light_mode_day-512.png"
+                alt=""
+              />
             )}
             <input
-            
+              name="checkbox"
+              id="checkbox"
               type="checkbox"
-              checked={false}
+              style={{ opacity: 0 }}
               onChange={() => {
                 if (theme) {
                   setTheme(false);
@@ -202,14 +211,18 @@ export default function ChatPage({ logout, validate }: Props) {
               }
             }}
           >
-            <input className="message-input" name="text" placeholder="Send a message here...." />
+            <input
+              className="message-input"
+              name="text"
+              placeholder="Send a message here...."
+            />
             <button className="button-message" type="submit">
               <BiSend className="sent-icon" />
             </button>
           </form>
         </div>
       </main>
-      <footer>footer</footer>
+      <footer>Copyright@ 2022 MovieMaster All rights reserved</footer>
     </div>
   );
 }

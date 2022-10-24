@@ -20,7 +20,9 @@ export default function FavoritePage() {
     <div className="favorite-page">
       <header className="favorite-page-header">
         <Link to="/MovieMasterHome">
-          <p>Movie Master</p>
+          <h1 className="movie-master" style={{ color: "#002347" }}>
+            Movie Master
+          </h1>
         </Link>
       </header>
       <h1>Favorites</h1>

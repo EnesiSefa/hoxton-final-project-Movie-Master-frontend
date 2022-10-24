@@ -4,7 +4,7 @@
   justify-content: center;
 }
 .movie-details-dark {
-  background: linear-gradient(#0e4255, #000000);
+  background: linear-gradient(#012b5c, #000000);
   display: grid;
   justify-content: center;
 }
@@ -12,6 +12,9 @@
 .movie-details-header {
   display: grid;
   grid-auto-flow: column;
+}
+.movie-details-current-user-pic{
+  clip-path: circle();
 }
 
 .movie-details-main {
